@@ -1172,24 +1172,10 @@
                 <div class="action-buttons">
                     ${demo.actions.map((action, index) => `
                         <button class="action-btn ${index === 0 ? 'primary' : 'secondary'}" 
-                                onclick="alert('In full system: ${action}\\n\\nTo try this feature, run the system locally with:\\nUsername: ${role === 'gceo' ? 'ceo' : 'gm.' + role}\\nPassword: Demo@2026')">
+                                onclick="alert('✨ ${action}\\n\\nThis feature is available in the full system.')">
                             ${action}
                         </button>
                     `).join('')}
-                </div>
-                
-                <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, #FFF9E6, #FFFBF0); border: 2px solid var(--gold); border-radius: 12px; font-size: 14px; color: var(--text-dark);">
-                    <strong style="color: var(--primary-blue);">💡 How to Experience Full System:</strong>
-                    <ol style="margin: 12px 0; padding-left: 20px;">
-                        <li>Clone: <code style="background: white; padding: 2px 8px; border-radius: 4px;">git clone https://github.com/mohanadalhassan-lab/fees-governance-system.git</code></li>
-                        <li>Setup database and install dependencies</li>
-                        <li>Run backend: <code style="background: white; padding: 2px 8px; border-radius: 4px;">cd server && npm start</code></li>
-                        <li>Run frontend: <code style="background: white; padding: 2px 8px; border-radius: 4px;">cd client && npm run dev</code></li>
-                        <li>Login with: <strong style="color: var(--gold);">${role === 'gceo' ? 'ceo' : 'gm.' + role}</strong> / <strong style="color: var(--gold);">Demo@2026</strong></li>
-                    </ol>
-                    <p style="margin-top: 12px;">
-                        📚 Full documentation available in the repository README
-                    </p>
                 </div>
             `;
             
