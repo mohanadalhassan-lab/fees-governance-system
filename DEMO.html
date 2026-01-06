@@ -200,11 +200,13 @@
             border-radius: 16px;
             padding: 24px;
             transition: transform 0.3s;
+            cursor: pointer;
         }
 
         .feature-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
+            border-color: var(--gold);
         }
 
         .feature-icon {
@@ -645,32 +647,32 @@
         <div class="demo-container">
             <h2 class="section-title">✨ System Features</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" onclick="showFeatureDetails('fee-management')">
                     <div class="feature-icon">📊</div>
                     <div class="feature-title">Fee Management</div>
                     <div class="feature-desc">46+ fees across Retail (Mass/Private/Tamayuz) and Corporate (Trade/Services/FX)</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showFeatureDetails('threshold')">
                     <div class="feature-icon">🎯</div>
                     <div class="feature-title">Threshold Control</div>
                     <div class="feature-desc">Global CEO threshold (98% for 2026) with fee-specific exceptions</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showFeatureDetails('exemptions')">
                     <div class="feature-icon">📋</div>
                     <div class="feature-title">Exemptions</div>
                     <div class="feature-desc">Sector, Permanent, and Temporary exemptions with full audit trail</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showFeatureDetails('satisfaction')">
                     <div class="feature-icon">📈</div>
                     <div class="feature-title">Satisfaction Engine</div>
                     <div class="feature-desc">4-state tracking: Not Satisfied → Conditionally Eligible → Pending → Satisfied</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showFeatureDetails('reports')">
                     <div class="feature-icon">📄</div>
                     <div class="feature-title">Reports</div>
                     <div class="feature-desc">5 report types with PDF/Excel export capability</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="showFeatureDetails('security')">
                     <div class="feature-icon">🔒</div>
                     <div class="feature-title">Security</div>
                     <div class="feature-desc">JWT authentication, RBAC, audit logging, maker/checker controls</div>
@@ -1173,6 +1175,168 @@
 
         function closeModal() {
             document.getElementById('roleModal').classList.remove('active');
+        }
+
+        function showFeatureDetails(featureKey) {
+            const features = {
+                'fee-management': {
+                    title: '📊 Fee Management System',
+                    description: 'Comprehensive fee definition and management across all banking segments',
+                    details: [
+                        '<strong>Retail Mass (11 Fees):</strong> Local transfers, FX markup, ATM fees, cards, checkbooks, SMS alerts',
+                        '<strong>Retail Private (5 Fees):</strong> Preferential rates, platinum cards, premium services',
+                        '<strong>Retail Tamayuz (4 Fees):</strong> VIP package with most fees waived',
+                        '<strong>Corporate Trade (8 Fees):</strong> LC opening, standby LC, guarantees, amendments',
+                        '<strong>Corporate Services (5 Fees):</strong> Cash management, payroll, cards, advisory',
+                        '<strong>Corporate FX (3 Fees):</strong> Transactions, forwards, swaps'
+                    ],
+                    capabilities: [
+                        'Single source of truth for all fees',
+                        'Hierarchical fee structure',
+                        'Segment-based pricing',
+                        'Fee version control',
+                        'Effective date management',
+                        'Fee calculator integration'
+                    ]
+                },
+                'threshold': {
+                    title: '🎯 Threshold Control System',
+                    description: 'Global and fee-specific threshold management with CEO authority',
+                    details: [
+                        '<strong>Global Threshold:</strong> CEO sets annual threshold (98% for 2026)',
+                        '<strong>Fee-Specific Exceptions:</strong> Individual thresholds per fee',
+                        '<strong>GM Acknowledgments:</strong> Mandatory GM review and acceptance',
+                        '<strong>Approval Workflow:</strong> Hierarchical threshold approval',
+                        '<strong>Compliance Tracking:</strong> Real-time threshold monitoring',
+                        '<strong>Historical Trends:</strong> Year-over-year threshold analysis'
+                    ],
+                    capabilities: [
+                        'CEO-level threshold setting',
+                        'Fee-level threshold overrides',
+                        'Automatic notification system',
+                        'Approval workflow management',
+                        'Threshold violation alerts',
+                        'Audit trail for all changes'
+                    ]
+                },
+                'exemptions': {
+                    title: '📋 Exemptions Management',
+                    description: 'Three-tier exemption system with full governance and audit',
+                    details: [
+                        '<strong>Sector Exemptions:</strong> Industry-based exemptions (Government, Healthcare, Education, etc.)',
+                        '<strong>Permanent Exemptions:</strong> Long-term customer exemptions with justification',
+                        '<strong>Temporary Exemptions:</strong> Time-bound exemptions with expiry dates',
+                        '<strong>Justification Required:</strong> Mandatory business case for all exemptions',
+                        '<strong>Approval Workflow:</strong> Multi-level approval (GM → CEO)',
+                        '<strong>Impact Analysis:</strong> Revenue impact tracking per exemption'
+                    ],
+                    capabilities: [
+                        'Multi-tier exemption types',
+                        'Justification workflow',
+                        'Expiry date management',
+                        'Revenue impact calculation',
+                        'Exemption audit reports',
+                        'Compliance monitoring'
+                    ]
+                },
+                'satisfaction': {
+                    title: '📈 Satisfaction Engine',
+                    description: '4-state satisfaction calculation based on Expected vs Actual performance',
+                    details: [
+                        '<strong>Formula:</strong> (Collected + Accrued) / Expected × 100',
+                        '<strong>State 1 - Not Satisfied:</strong> Below threshold, needs attention',
+                        '<strong>State 2 - Conditionally Eligible:</strong> Approaching threshold, pending GM acknowledgment',
+                        '<strong>State 3 - Pending CEO:</strong> GM acknowledged, awaiting CEO approval',
+                        '<strong>State 4 - Satisfied:</strong> CEO approved, threshold met',
+                        '<strong>Real-time Calculation:</strong> Automatic satisfaction updates'
+                    ],
+                    capabilities: [
+                        '4-state satisfaction model',
+                        'Real-time calculation engine',
+                        'Automatic state transitions',
+                        'Notification triggers',
+                        'Historical satisfaction tracking',
+                        'Trend analysis and forecasting'
+                    ]
+                },
+                'reports': {
+                    title: '📄 Comprehensive Reporting',
+                    description: '5 report types with multiple export formats for all stakeholders',
+                    details: [
+                        '<strong>Fee Performance Report:</strong> Revenue, collection rates, satisfaction by fee',
+                        '<strong>Exemptions Report:</strong> All exemptions with justifications and impact',
+                        '<strong>Satisfaction Status Report:</strong> All fees with current satisfaction state',
+                        '<strong>Threshold Compliance Report:</strong> Threshold violations and exceptions',
+                        '<strong>Audit Trail Report:</strong> Complete system activity log',
+                        '<strong>Export Formats:</strong> PDF and Excel for all reports'
+                    ],
+                    capabilities: [
+                        '5 comprehensive report types',
+                        'PDF and Excel export',
+                        'Scheduled report generation',
+                        'Email distribution',
+                        'Custom date ranges',
+                        'Drill-down capabilities'
+                    ]
+                },
+                'security': {
+                    title: '🔒 Enterprise Security',
+                    description: 'Multi-layered security with RBAC, audit trails, and maker/checker controls',
+                    details: [
+                        '<strong>JWT Authentication:</strong> Secure token-based authentication',
+                        '<strong>Role-Based Access:</strong> 15 granular roles (CEO, GMs, AGMs, Managers, etc.)',
+                        '<strong>Audit Logging:</strong> All actions logged with user, timestamp, IP',
+                        '<strong>Maker/Checker:</strong> Four-eyes principle for critical operations',
+                        '<strong>Session Management:</strong> Secure session handling and timeout',
+                        '<strong>Data Encryption:</strong> Encrypted data at rest and in transit'
+                    ],
+                    capabilities: [
+                        'JWT token authentication',
+                        '15 hierarchical roles',
+                        'Complete audit trail',
+                        'Maker/checker workflow',
+                        'Password encryption (bcrypt)',
+                        'SQL injection prevention',
+                        'CORS protection',
+                        'Session timeout management'
+                    ]
+                }
+            };
+
+            const feature = features[featureKey];
+            const modal = document.getElementById('roleModal');
+            const content = document.getElementById('modalContent');
+
+            let html = `
+                <h2>${feature.title}</h2>
+                <p style="font-size: 18px; color: var(--text-gray); margin-bottom: 24px;">${feature.description}</p>
+                
+                <div class="dashboard-preview">
+                    <div class="preview-section">
+                        <h4>📋 Details</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            ${feature.details.map(detail => `
+                                <li style="padding: 8px 0; padding-left: 24px; position: relative; color: var(--text-gray);">
+                                    <span style="position: absolute; left: 0; color: var(--gold); font-weight: bold;">◆</span>
+                                    ${detail}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="system-capabilities">
+                    <h4 style="font-size: 18px; margin-bottom: 16px; color: var(--primary-blue);">
+                        🎯 System Capabilities
+                    </h4>
+                    <ul class="capability-list">
+                        ${feature.capabilities.map(cap => `<li>${cap}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            content.innerHTML = html;
+            modal.classList.add('active');
         }
 
         // Close modal on outside click
