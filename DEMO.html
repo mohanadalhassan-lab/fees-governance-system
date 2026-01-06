@@ -12,21 +12,26 @@
         }
 
         :root {
-            --apple-blue: #007AFF;
-            --apple-gray: #F5F5F7;
-            --apple-dark: #1D1D1F;
-            --apple-light: #FFFFFF;
-            --apple-border: #D2D2D7;
-            --shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --primary-blue: #1E3A8A;
+            --light-blue: #3B82F6;
+            --gold: #D4AF37;
+            --dark-gold: #B8941F;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --border-gray: #E2E8F0;
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --shadow: 0 2px 16px rgba(30, 58, 138, 0.08);
+            --shadow-lg: 0 8px 32px rgba(30, 58, 138, 0.15);
+            --gold-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #60A5FA 100%);
             min-height: 100vh;
             padding: 20px;
-            color: var(--apple-dark);
+            color: var(--text-dark);
         }
 
         .container {
@@ -85,8 +90,8 @@
         }
 
         .role-card {
-            background: linear-gradient(135deg, var(--apple-gray) 0%, white 100%);
-            border: 1px solid var(--apple-border);
+            background: var(--white);
+            border: 2px solid var(--border-gray);
             border-radius: 16px;
             padding: 24px;
             cursor: pointer;
@@ -102,7 +107,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, var(--gold), var(--dark-gold));
             transform: scaleX(0);
             transition: transform 0.3s;
         }
@@ -119,32 +124,33 @@
         .role-icon {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 16px;
             font-size: 28px;
+            box-shadow: var(--shadow);
         }
 
         .role-title {
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--apple-dark);
+            color: var(--text-dark);
         }
 
         .role-name {
             font-size: 15px;
-            color: #86868B;
+            color: var(--text-gray);
             margin-bottom: 12px;
         }
 
         .role-features {
             list-style: none;
             font-size: 14px;
-            color: #6E6E73;
+            color: var(--text-gray);
         }
 
         .role-features li {
@@ -157,13 +163,13 @@
             content: '✓';
             position: absolute;
             left: 0;
-            color: #667eea;
+            color: var(--gold);
             font-weight: bold;
         }
 
         .demo-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--white);
             border: none;
             padding: 12px 28px;
             border-radius: 12px;
@@ -173,11 +179,12 @@
             width: 100%;
             margin-top: 16px;
             transition: all 0.3s;
+            box-shadow: var(--gold-shadow);
         }
 
         .demo-btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
         }
 
         .features-grid {
@@ -188,7 +195,8 @@
         }
 
         .feature-card {
-            background: var(--apple-gray);
+            background: var(--white);
+            border: 1px solid var(--border-gray);
             border-radius: 16px;
             padding: 24px;
             transition: transform 0.3s;
@@ -196,6 +204,7 @@
 
         .feature-card:hover {
             transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
 
         .feature-icon {
@@ -207,11 +216,12 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 8px;
+            color: var(--primary-blue);
         }
 
         .feature-desc {
             font-size: 14px;
-            color: #6E6E73;
+            color: var(--text-gray);
             line-height: 1.5;
         }
 
@@ -223,27 +233,45 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
             border-radius: 16px;
             padding: 24px;
             text-align: center;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: var(--gold);
+            opacity: 0.1;
+            border-radius: 50%;
         }
 
         .stat-value {
             font-size: 40px;
             font-weight: 700;
             margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
         }
 
         .stat-label {
             font-size: 14px;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .credentials {
-            background: #FFF9E6;
-            border: 2px solid #FFD700;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFBF0 100%);
+            border: 2px solid var(--gold);
             border-radius: 16px;
             padding: 24px;
             margin: 30px 0;
@@ -252,7 +280,7 @@
         .credentials h3 {
             font-size: 20px;
             margin-bottom: 16px;
-            color: var(--apple-dark);
+            color: var(--text-dark);
         }
 
         .cred-grid {
@@ -266,10 +294,11 @@
             padding: 12px 16px;
             border-radius: 8px;
             font-size: 14px;
+            border: 1px solid var(--border-gray);
         }
 
         .cred-item strong {
-            color: #667eea;
+            color: var(--gold);
         }
 
         .modal {
@@ -335,11 +364,11 @@
         }
 
         .dashboard-preview {
-            border: 2px solid var(--apple-border);
+            border: 2px solid var(--border-gray);
             border-radius: 16px;
             padding: 24px;
             margin: 20px 0;
-            background: var(--apple-gray);
+            background: var(--light-gray);
         }
 
         .preview-section {
@@ -349,7 +378,7 @@
         .preview-section h4 {
             font-size: 18px;
             margin-bottom: 12px;
-            color: var(--apple-dark);
+            color: var(--primary-blue);
         }
 
         .preview-grid {
@@ -363,28 +392,31 @@
             padding: 16px;
             border-radius: 12px;
             text-align: center;
+            border: 1px solid var(--border-gray);
         }
 
         .preview-value {
             font-size: 24px;
             font-weight: 600;
-            color: #667eea;
+            color: var(--gold);
             margin-bottom: 4px;
         }
 
         .preview-label {
             font-size: 12px;
-            color: #6E6E73;
+            color: var(--text-gray);
         }
 
         .action-buttons {
             display: flex;
             gap: 12px;
             margin-top: 24px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
             flex: 1;
+            min-width: 200px;
             padding: 14px;
             border: none;
             border-radius: 12px;
@@ -395,18 +427,67 @@
         }
 
         .action-btn.primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
             color: white;
+            box-shadow: var(--gold-shadow);
         }
 
         .action-btn.secondary {
-            background: var(--apple-gray);
-            color: var(--apple-dark);
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .system-capabilities {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 20px;
+            border: 2px solid var(--gold);
+        }
+
+        .capability-section {
+            margin-bottom: 20px;
+        }
+
+        .capability-section h5 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .capability-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 8px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .capability-list li {
+            padding: 8px 12px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-gray);
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .capability-list li::before {
+            content: '◆';
+            position: absolute;
+            left: 10px;
+            color: var(--gold);
+            font-size: 10px;
         }
 
         @media (max-width: 768px) {
@@ -637,7 +718,46 @@
                     'Access executive overview and top performing fees',
                     'Make final approval decisions'
                 ],
-                actions: ['View Full Dashboard', 'Generate Executive Report', 'Approve Threshold Changes']
+                capabilities: {
+                    'Dashboard Features': [
+                        'Real-time global threshold monitoring',
+                        'Satisfaction status overview (8 Not Satisfied, 0 Satisfied)',
+                        'Exemptions summary (22 customers exempted)',
+                        'Top 10 fees by expected revenue',
+                        'Pending GM acknowledgments tracking',
+                        'Executive KPIs and metrics'
+                    ],
+                    'Threshold Management': [
+                        'Set annual global threshold (Current: 98% for 2026)',
+                        'Review threshold exceptions',
+                        'Approve fee-specific threshold adjustments',
+                        'Monitor threshold compliance across all fees',
+                        'Historical threshold trends'
+                    ],
+                    'Approvals & Governance': [
+                        'Approve GM threshold acknowledgments',
+                        'Final authority on satisfaction status',
+                        'Review and approve exemption requests',
+                        'Approve major fee structure changes',
+                        'Sign off on compliance reports'
+                    ],
+                    'Reports & Analytics': [
+                        'Executive summary reports',
+                        'Bank-wide fee performance',
+                        'Revenue vs target analysis',
+                        'Exception and risk reports',
+                        'Compliance overview',
+                        'Export to PDF/Excel'
+                    ],
+                    'System Access': [
+                        'Full system visibility',
+                        'Access to all dashboards',
+                        'View all user activities',
+                        'System configuration',
+                        'User management oversight'
+                    ]
+                },
+                actions: ['View Full Dashboard', 'Generate Executive Report', 'Approve Threshold Changes', 'Review Exemptions']
             },
             finance: {
                 title: '💰 GM Finance Dashboard',
@@ -656,7 +776,56 @@
                     'Fees with lowest collection rates',
                     'Period filtering (Monthly/Quarterly/Annual)'
                 ],
-                actions: ['Download Financial Report', 'Analyze Collection Gaps', 'View Fee Details']
+                capabilities: {
+                    'Revenue Analysis': [
+                        'Expected vs Realized revenue comparison',
+                        'Revenue breakdown by segment (Retail/Corporate)',
+                        'Revenue trends and forecasting',
+                        'Top 10 revenue-generating fees',
+                        'Revenue by fee category',
+                        'Month-over-month growth analysis'
+                    ],
+                    'Collection Monitoring': [
+                        'Overall collection rate: 87%',
+                        'Collection rates by category',
+                        'Collected vs Accrued analysis',
+                        'Fees with lowest collection rates',
+                        'Collection trends and patterns',
+                        'Customer payment behavior'
+                    ],
+                    'Gap Analysis': [
+                        'Total revenue gap: QAR 325K',
+                        'Exemptions impact on revenue',
+                        'Collection gaps by segment',
+                        'Uncollected fee analysis',
+                        'Recovery opportunities',
+                        'Gap closure strategies'
+                    ],
+                    'Fee Performance': [
+                        '46+ active fees tracked',
+                        'Import LC: QAR 35,250 expected',
+                        'Standby LC: QAR 28,750 expected',
+                        'Letter of Guarantee: QAR 26,500',
+                        'Corporate Card: QAR 12,500',
+                        'Performance vs targets'
+                    ],
+                    'Financial Reports': [
+                        'Revenue summary reports',
+                        'Collection performance reports',
+                        'Segment analysis reports',
+                        'Fee profitability analysis',
+                        'Budget vs actual reports',
+                        'PDF/Excel export'
+                    ],
+                    'Filters & Views': [
+                        'Period: Monthly/Quarterly/Annual',
+                        'Segment: All/Retail/Corporate',
+                        'Category filtering',
+                        'Custom date ranges',
+                        'Comparative analysis'
+                    ]
+                },
+                actions: ['Download Financial Report', 'Analyze Collection Gaps', 'View Fee Details', 'Export to Excel']
             },
             risk: {
                 title: '⚠️ GM Risk Dashboard',
@@ -675,7 +844,57 @@
                     'Financial impact quantification',
                     'Actionable recommendations per risk'
                 ],
-                actions: ['Review Risk Items', 'Generate Risk Report', 'Set Risk Alerts']
+                capabilities: {
+                    'Risk Identification': [
+                        '12 fees flagged as critical risk',
+                        'Fees below 98% threshold',
+                        'Worst matching ratios analysis',
+                        'Exception pattern detection',
+                        'Risk scoring and classification',
+                        'Early warning indicators'
+                    ],
+                    'Risk Assessment': [
+                        'Critical: Fees below 85% matching',
+                        'High Risk: 85-90% matching',
+                        'Medium Risk: 90-95% matching',
+                        'Low Risk: 95-98% matching',
+                        'Risk exposure: QAR 450K',
+                        'Impact on satisfaction status'
+                    ],
+                    'Exception Monitoring': [
+                        'Track 8 fees below threshold',
+                        'Exception frequency analysis',
+                        'Pattern identification',
+                        'Root cause analysis',
+                        'Recurring vs one-time exceptions',
+                        'Exception resolution tracking'
+                    ],
+                    'Risk Trends': [
+                        'Improving: 3 fees',
+                        'Declining: 5 fees',
+                        'Stable: 4 fees',
+                        'Trend analysis over time',
+                        'Predictive risk indicators',
+                        'Seasonal patterns'
+                    ],
+                    'Mitigation Actions': [
+                        'Actionable recommendations',
+                        'Risk mitigation strategies',
+                        'Escalation procedures',
+                        'Corrective action tracking',
+                        'Risk acceptance decisions',
+                        'Mitigation effectiveness'
+                    ],
+                    'Risk Reports': [
+                        'Risk summary dashboard',
+                        'Detailed risk assessments',
+                        'Exception reports',
+                        'Risk trend reports',
+                        'Mitigation progress',
+                        'Executive risk briefings'
+                    ]
+                },
+                actions: ['Review Risk Items', 'Generate Risk Report', 'Set Risk Alerts', 'Escalate Issues']
             },
             compliance: {
                 title: '✅ GM Compliance Dashboard',
@@ -694,7 +913,57 @@
                     'Complete audit trail with timestamps',
                     'Compliance status classification'
                 ],
-                actions: ['Audit Exemptions', 'Compliance Report', 'Review Audit Trail']
+                capabilities: {
+                    'Policy Compliance': [
+                        'Overall compliance: 94%',
+                        'Fee policy adherence tracking',
+                        'Exception policy compliance',
+                        'Threshold policy monitoring',
+                        'Approval workflow compliance',
+                        'Policy violation alerts'
+                    ],
+                    'Exemptions Management': [
+                        '22 active exemptions',
+                        'Sector exemptions: 20 customers',
+                        'Permanent exemptions: 1 customer',
+                        'Temporary exemptions: 1 customer',
+                        'Exemption justification review',
+                        'Exemption expiry tracking'
+                    ],
+                    'Regulatory Compliance': [
+                        '100% regulatory requirements met',
+                        'Central Bank reporting',
+                        'Tariff disclosure compliance',
+                        'Customer notification requirements',
+                        'Regulatory submission tracking',
+                        'Compliance deadline monitoring'
+                    ],
+                    'Audit Trail': [
+                        '1,247 audit log entries',
+                        'All actions tracked with timestamps',
+                        'User activity monitoring',
+                        'Change history tracking',
+                        'Access logs',
+                        'Compliance audit reports'
+                    ],
+                    'Compliance Reviews': [
+                        'Exemption justification audits',
+                        'Threshold compliance reviews',
+                        'Policy adherence checks',
+                        'Regulatory submission reviews',
+                        'Internal control assessments',
+                        'External audit preparation'
+                    ],
+                    'Compliance Reports': [
+                        'Compliance status reports',
+                        'Exemption audit reports',
+                        'Regulatory submission reports',
+                        'Audit trail summaries',
+                        'Non-compliance reports',
+                        'Remediation tracking'
+                    ]
+                },
+                actions: ['Audit Exemptions', 'Compliance Report', 'Review Audit Trail', 'Generate Certification']
             },
             retail: {
                 title: '🏦 GM Retail Banking Dashboard',
@@ -713,7 +982,63 @@
                     'Segment comparison analytics',
                     'Retail banking reports'
                 ],
-                actions: ['Segment Analysis', 'Customer Report', 'Fee Performance']
+                capabilities: {
+                    'Mass Banking (11 Fees)': [
+                        'Local Transfers (3-tier: QAR 0.60, 4.00, 6.00)',
+                        'Internal Transfer: QAR 0.50',
+                        'FX Markup USD/GCC: 2.0%',
+                        'FX Markup GBP/EUR: 2.5%',
+                        'ATM International: QAR 10',
+                        'Paper Statement: QAR 25',
+                        'Checkbook (25 leaves): QAR 50',
+                        'Debit Card Annual: QAR 100',
+                        'Credit Card Annual: QAR 300',
+                        'SMS Alerts: QAR 10/month',
+                        'SWIFT Outgoing: QAR 75'
+                    ],
+                    'Private Banking (5 Fees)': [
+                        'Local Transfers (preferential rates)',
+                        'SWIFT Outgoing: QAR 50',
+                        'Platinum Debit Card: FREE',
+                        'Platinum Credit Card: QAR 200',
+                        'Checkbook: FREE',
+                        'Enhanced service levels',
+                        'Relationship-based pricing'
+                    ],
+                    'Tamayuz VIP (4 Fees)': [
+                        'Local Transfer: FREE',
+                        'SWIFT Outgoing: FREE',
+                        'Visa Infinite Card: FREE',
+                        'Relationship Package: QAR 1,000',
+                        'Most fees waived',
+                        'Premium banking experience'
+                    ],
+                    'Segment Performance': [
+                        'Mass: 75 customers, QAR 650K revenue',
+                        'Private: 20 customers, QAR 450K revenue',
+                        'Tamayuz: 5 customers, QAR 100K revenue',
+                        'Cross-segment comparison',
+                        'Customer migration tracking',
+                        'Segment profitability'
+                    ],
+                    'Retail Analytics': [
+                        'Customer satisfaction by segment',
+                        'Fee utilization rates',
+                        'Revenue per customer',
+                        'Product penetration',
+                        'Service quality metrics',
+                        'Customer retention'
+                    ],
+                    'Retail Reports': [
+                        'Segment performance reports',
+                        'Customer analytics',
+                        'Fee utilization reports',
+                        'Revenue analysis',
+                        'Satisfaction tracking',
+                        'Competitive analysis'
+                    ]
+                },
+                actions: ['Segment Analysis', 'Customer Report', 'Fee Performance', 'View Comparisons']
             },
             corporate: {
                 title: '🏢 GM Corporate Banking Dashboard',
@@ -732,7 +1057,60 @@
                     'Corporate-specific exemptions',
                     'Enterprise banking reports'
                 ],
-                actions: ['Category Analysis', 'Trade Report', 'Corporate Overview']
+                capabilities: {
+                    'Trade Finance (8 Fees)': [
+                        'Import LC Opening: 0.5% + 0.125%/month (min QAR 500)',
+                        'Standby LC: 0.20%/month (min QAR 750)',
+                        'Letter of Guarantee: 0.20%/month (min QAR 500)',
+                        'Export LC Advising: 0.125% (min QAR 250)',
+                        'LC Amendment: QAR 200',
+                        'Bill Discounting: 0.25%',
+                        'Shipping Guarantee: QAR 500',
+                        'Documentary Collection: 0.15% (min QAR 150)'
+                    ],
+                    'Corporate Services (5 Fees)': [
+                        'Cash Management Platform: QAR 500/month',
+                        'Payroll Processing: QAR 2/transaction',
+                        'Corporate Card Annual: QAR 250',
+                        'Account Analysis Report: QAR 100',
+                        'Treasury Advisory: QAR 1,000',
+                        'Dedicated relationship manager',
+                        'Customized reporting'
+                    ],
+                    'FX Services (3 Fees)': [
+                        'FX Transaction: 0.10% (min QAR 50)',
+                        'FX Forward Contract: QAR 200',
+                        'Currency Swap: 0.15% (min QAR 300)',
+                        'Real-time FX rates',
+                        'Hedging solutions',
+                        'Multi-currency accounts'
+                    ],
+                    'Category Performance': [
+                        'Trade Finance: QAR 750K (58% of revenue)',
+                        'Corporate Services: QAR 350K (27%)',
+                        'FX Services: QAR 200K (15%)',
+                        'Category trends',
+                        'Cross-sell opportunities',
+                        'Relationship profitability'
+                    ],
+                    'Corporate Analytics': [
+                        'Customer size segmentation',
+                        'Product penetration rates',
+                        'Wallet share analysis',
+                        'Relationship depth',
+                        'Service utilization',
+                        'Customer lifetime value'
+                    ],
+                    'Corporate Reports': [
+                        'Category performance reports',
+                        'Customer relationship reports',
+                        'Product utilization reports',
+                        'Revenue analysis',
+                        'Cross-sell opportunities',
+                        'Risk assessment reports'
+                    ]
+                },
+                actions: ['Category Analysis', 'Trade Report', 'Corporate Overview', 'Client Review']
             }
         };
 
@@ -741,9 +1119,22 @@
             const modal = document.getElementById('roleModal');
             const content = document.getElementById('modalContent');
             
+            // Build capabilities HTML
+            let capabilitiesHtml = '';
+            for (const [category, items] of Object.entries(demo.capabilities)) {
+                capabilitiesHtml += `
+                    <div class="capability-section">
+                        <h5>${category}</h5>
+                        <ul class="capability-list">
+                            ${items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
             let html = `
                 <h2>${demo.title}</h2>
-                <p style="font-size: 18px; color: #6E6E73; margin-bottom: 24px;">Logged in as: <strong>${demo.name}</strong></p>
+                <p style="font-size: 18px; color: var(--text-gray); margin-bottom: 24px;">Logged in as: <strong style="color: var(--gold);">${demo.name}</strong></p>
                 
                 <div class="dashboard-preview">
                     <div class="preview-section">
@@ -759,11 +1150,11 @@
                     </div>
                     
                     <div class="preview-section">
-                        <h4>✨ Available Features</h4>
+                        <h4>✨ Key Features</h4>
                         <ul style="list-style: none; padding: 0;">
                             ${demo.features.map(feature => `
                                 <li style="padding: 8px 0; padding-left: 24px; position: relative;">
-                                    <span style="position: absolute; left: 0; color: #667eea; font-weight: bold;">✓</span>
+                                    <span style="position: absolute; left: 0; color: var(--gold); font-weight: bold;">✓</span>
                                     ${feature}
                                 </li>
                             `).join('')}
@@ -771,22 +1162,34 @@
                     </div>
                 </div>
                 
+                <div class="system-capabilities">
+                    <h4 style="font-size: 20px; margin-bottom: 20px; color: var(--primary-blue); text-align: center;">
+                        🎯 Complete System Capabilities for this Role
+                    </h4>
+                    ${capabilitiesHtml}
+                </div>
+                
                 <div class="action-buttons">
                     ${demo.actions.map((action, index) => `
                         <button class="action-btn ${index === 0 ? 'primary' : 'secondary'}" 
-                                onclick="alert('In full system: ${action}')">
+                                onclick="alert('In full system: ${action}\\n\\nTo try this feature, run the system locally with:\\nUsername: ${role === 'gceo' ? 'ceo' : 'gm.' + role}\\nPassword: Demo@2026')">
                             ${action}
                         </button>
                     `).join('')}
                 </div>
                 
-                <div style="margin-top: 24px; padding: 16px; background: #F5F5F7; border-radius: 12px; font-size: 14px; color: #6E6E73;">
-                    <strong>💡 Note:</strong> This is a preview. To experience the full interactive dashboard, 
-                    <a href="https://github.com/mohanadalhassan-lab/fees-governance-system" 
-                       style="color: #667eea; text-decoration: none;" target="_blank">
-                        clone the repository
-                    </a> 
-                    and run locally with credentials: <strong>${role === 'gceo' ? 'ceo' : 'gm.' + role}</strong> / <strong>Demo@2026</strong>
+                <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, #FFF9E6, #FFFBF0); border: 2px solid var(--gold); border-radius: 12px; font-size: 14px; color: var(--text-dark);">
+                    <strong style="color: var(--primary-blue);">💡 How to Experience Full System:</strong>
+                    <ol style="margin: 12px 0; padding-left: 20px;">
+                        <li>Clone: <code style="background: white; padding: 2px 8px; border-radius: 4px;">git clone https://github.com/mohanadalhassan-lab/fees-governance-system.git</code></li>
+                        <li>Setup database and install dependencies</li>
+                        <li>Run backend: <code style="background: white; padding: 2px 8px; border-radius: 4px;">cd server && npm start</code></li>
+                        <li>Run frontend: <code style="background: white; padding: 2px 8px; border-radius: 4px;">cd client && npm run dev</code></li>
+                        <li>Login with: <strong style="color: var(--gold);">${role === 'gceo' ? 'ceo' : 'gm.' + role}</strong> / <strong style="color: var(--gold);">Demo@2026</strong></li>
+                    </ol>
+                    <p style="margin-top: 12px;">
+                        📚 Full documentation available in the repository README
+                    </p>
                 </div>
             `;
             
