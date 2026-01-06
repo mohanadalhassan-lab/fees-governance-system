@@ -51,6 +51,74 @@ router.get('/ceo', authenticateToken, authorizeRoles('CEO'), async (req, res) =>
                           parseInt(exemptionsSummary.permanent_exempted) + 
                           parseInt(exemptionsSummary.temporary_exempted);
     
+    // All fees with comprehensive details
+    const allFeesResult = await query(`
+      SELECT 
+        fd.fee_id,
+        fd.fee_name_en as fee_name,
+        fd.fee_name_ar,
+        fd.segment,
+        fd.category,
+        fd.status,
+        COUNT(DISTINCT fp.customer_id) as total_customers,
+        SUM(fp.expected_amount) as expected_amount,
+        SUM(fp.collected_amount) as collected_amount,
+        SUM(fp.accrued_amount) as accrued_amount,
+        CASE 
+          WHEN SUM(fp.expected_amount) > 0 
+          THEN ((SUM(fp.collected_amount) + SUM(fp.accrued_amount)) / SUM(fp.expected_amount) * 100)
+          ELSE 0 
+        END as matching_ratio,
+        COUNT(DISTINCT ga.gm_user_id) as gm_acknowledgments,
+        MAX(ga.acknowledged_at) as last_gm_acknowledgment
+      FROM fee_definitions fd
+      LEFT JOIN fee_performance fp ON fd.fee_id = fp.fee_id
+      LEFT JOIN gm_acknowledgments ga ON fd.fee_id = ga.fee_id AND ga.status = 'Acknowledged'
+      WHERE fd.status = 'Active'
+      GROUP BY fd.fee_id, fd.fee_name_en, fd.fee_name_ar, fd.segment, fd.category, fd.status
+      ORDER BY fd.segment, fd.category, fd.fee_name_en
+    `);
+    
+    // Segment breakdown
+    const segmentBreakdownResult = await query(`
+      SELECT 
+        fd.segment,
+        COUNT(DISTINCT fd.fee_id) as total_fees,
+        COUNT(DISTINCT fp.customer_id) as total_customers,
+        SUM(fp.expected_amount) as expected_amount,
+        SUM(fp.collected_amount) as collected_amount,
+        SUM(fp.accrued_amount) as accrued_amount,
+        CASE 
+          WHEN SUM(fp.expected_amount) > 0 
+          THEN ((SUM(fp.collected_amount) + SUM(fp.accrued_amount)) / SUM(fp.expected_amount) * 100)
+          ELSE 0 
+        END as avg_matching_ratio
+      FROM fee_definitions fd
+      LEFT JOIN fee_performance fp ON fd.fee_id = fp.fee_id
+      WHERE fd.status = 'Active'
+      GROUP BY fd.segment
+      ORDER BY fd.segment
+    `);
+    
+    // Category performance
+    const categoryPerformanceResult = await query(`
+      SELECT 
+        fd.category,
+        fd.segment,
+        COUNT(DISTINCT fd.fee_id) as fee_count,
+        SUM(fp.expected_amount) as expected_amount,
+        CASE 
+          WHEN SUM(fp.expected_amount) > 0 
+          THEN ((SUM(fp.collected_amount) + SUM(fp.accrued_amount)) / SUM(fp.expected_amount) * 100)
+          ELSE 0 
+        END as performance
+      FROM fee_definitions fd
+      LEFT JOIN fee_performance fp ON fd.fee_id = fp.fee_id
+      WHERE fd.status = 'Active'
+      GROUP BY fd.category, fd.segment
+      ORDER BY performance ASC
+    `);
+    
     // Top fees by value
     const topFeesResult = await query(`
       SELECT 
@@ -104,6 +172,9 @@ router.get('/ceo', authenticateToken, authorizeRoles('CEO'), async (req, res) =>
         temporary_exempted: parseInt(exemptionsSummary.temporary_exempted),
         total_customers: parseInt(exemptionsSummary.total_customers)
       },
+      all_fees: allFeesResult.rows,
+      segment_breakdown: segmentBreakdownResult.rows,
+      category_performance: categoryPerformanceResult.rows,
       top_fees_by_value: topFeesResult.rows,
       worst_matching_ratios: worstMatchingResult.rows,
       pending_approvals: pendingApprovalsResult.rows

@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
 import DashboardLayout from '../components/DashboardLayout';
 import StatusBadge from '../components/StatusBadge';
-import { formatCurrency, formatPercentage, formatDate, getStatusBadgeConfig } from '../utils/helpers';
+import { formatCurrency, formatPercentage, formatDate, formatNumber, getStatusBadgeConfig } from '../utils/helpers';
 
 export default function GMCorporateDashboard() {
   const { user } = useAuth();
@@ -160,9 +160,11 @@ export default function GMCorporateDashboard() {
 
         {/* Corporate Fees Performance */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-            <h2 className="text-xl font-bold text-gray-900">Corporate Fees Performance</h2>
-            <p className="text-sm text-gray-600 mt-1">All fees under your responsibility</p>
+          <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-purple-50 to-purple-100">
+            <h2 className="text-xl font-bold text-gray-900">All Corporate Fees</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Complete list of {dashboardData?.fees?.length || 0} corporate banking fees under your supervision
+            </p>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
@@ -170,63 +172,76 @@ export default function GMCorporateDashboard() {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fee Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Customers</th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Expected</th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Collected</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Match Rate</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Accrued</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Performance</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">GM Ack</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Action</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {dashboardData?.fees?.map((fee) => {
-                  const config = getStatusBadgeConfig(fee.matching_ratio);
-                  const isPending = pendingAcknowledgments.some(p => p.fee_id === fee.fee_id);
-
-                  return (
-                    <tr key={fee.fee_id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">{fee.fee_name}</p>
-                          <p className="text-xs text-gray-500">{fee.customers_charged || 0} customers</p>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                        {fee.category}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-blue-600">
-                        {formatCurrency(fee.expected_amount || 0)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600">
-                        {formatCurrency((fee.collected_amount || 0) + (fee.accrued_amount || 0))}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <StatusBadge value={fee.matching_ratio} />
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                          fee.gm_acknowledged ? 'bg-green-100 text-green-800' :
-                          isPending ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {fee.gm_acknowledged ? 'Acknowledged' : isPending ? 'Pending' : 'Not Required'}
+                {dashboardData?.fees?.map((fee) => (
+                  <tr key={fee.fee_id} className="hover:bg-purple-50 transition">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      {fee.fee_name}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {fee.category}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
+                      {formatNumber(fee.customers_charged)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900">
+                      {formatCurrency(fee.expected_amount)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600">
+                      {formatCurrency(fee.collected_amount)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600">
+                      {formatCurrency(fee.accrued_amount)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        fee.matching_ratio >= 98 ? 'bg-green-100 text-green-800' :
+                        fee.matching_ratio >= 90 ? 'bg-yellow-100 text-yellow-800' :
+                        fee.matching_ratio >= 80 ? 'bg-orange-100 text-orange-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {formatPercentage(fee.matching_ratio)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      {fee.gm_acknowledged ? (
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">
+                          <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Acknowledged
                         </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        {isPending && !fee.gm_acknowledged && (
-                          <button
-                            onClick={() => {
-                              setSelectedFee(fee);
-                              setAcknowledgmentNote('');
-                            }}
-                            className="text-purple-600 hover:text-purple-800 font-medium"
-                          >
-                            Acknowledge
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
+                      ) : (
+                        <span className="text-gray-400 text-xs">Not Yet</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      {!fee.gm_acknowledged && fee.matching_ratio >= 98 && (
+                        <button
+                          onClick={() => setSelectedFee(fee)}
+                          className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-xs font-medium"
+                        >
+                          Acknowledge
+                        </button>
+                      )}
+                      {fee.gm_acknowledged && (
+                        <span className="text-xs text-gray-500">Done</span>
+                      )}
+                      {!fee.gm_acknowledged && fee.matching_ratio < 98 && (
+                        <span className="text-xs text-gray-400">Below Threshold</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

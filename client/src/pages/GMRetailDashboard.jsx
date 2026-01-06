@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
 import DashboardLayout from '../components/DashboardLayout';
 import StatusBadge from '../components/StatusBadge';
-import { formatCurrency, formatPercentage, formatDate, getStatusBadgeConfig } from '../utils/helpers';
+import { formatCurrency, formatPercentage, formatDate, formatNumber, getStatusBadgeConfig } from '../utils/helpers';
 
 export default function GMRetailDashboard() {
   const { user } = useAuth();
@@ -110,7 +110,96 @@ export default function GMRetailDashboard() {
           </div>
         </div>
 
-        {/* Pending Acknowledgments Alert */}
+        {/* All Retail Fees Table */}
+        <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-blue-100">
+            <h2 className="text-xl font-bold text-gray-900">All Retail Fees</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Complete list of {dashboardData?.fees?.length || 0} retail banking fees under your supervision
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fee Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Customers</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Expected</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Collected</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Accrued</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Performance</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">GM Ack</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Action</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {dashboardData?.fees?.map((fee) => (
+                  <tr key={fee.fee_id} className="hover:bg-blue-50 transition">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      {fee.fee_name}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {fee.category}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
+                      {formatNumber(fee.customers_charged)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900">
+                      {formatCurrency(fee.expected_amount)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600">
+                      {formatCurrency(fee.collected_amount)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-600">
+                      {formatCurrency(fee.accrued_amount)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        fee.matching_ratio >= 98 ? 'bg-green-100 text-green-800' :
+                        fee.matching_ratio >= 90 ? 'bg-yellow-100 text-yellow-800' :
+                        fee.matching_ratio >= 80 ? 'bg-orange-100 text-orange-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {formatPercentage(fee.matching_ratio)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      {fee.gm_acknowledged ? (
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">
+                          <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Acknowledged
+                        </span>
+                      ) : (
+                        <span className="text-gray-400 text-xs">Not Yet</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      {!fee.gm_acknowledged && fee.matching_ratio >= 98 && (
+                        <button
+                          onClick={() => setSelectedFee(fee)}
+                          className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-xs font-medium"
+                        >
+                          Acknowledge
+                        </button>
+                      )}
+                      {fee.gm_acknowledged && (
+                        <span className="text-xs text-gray-500">Done</span>
+                      )}
+                      {!fee.gm_acknowledged && fee.matching_ratio < 98 && (
+                        <span className="text-xs text-gray-400">Below Threshold</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Pending Acknowledgments */}
         {pendingAcknowledgments.length > 0 && (
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg shadow">
             <div className="flex items-start">
