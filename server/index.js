@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import feesRoutes from './routes/fees.js';
 import dashboardRoutes from './routes/dashboards.js';
+import gmDashboardRoutes from './routes/gm-dashboards.js';
 import thresholdRoutes from './routes/thresholds.js';
 import satisfactionRoutes from './routes/satisfaction.js';
 import exemptionRoutes from './routes/exemptions.js';
@@ -40,6 +41,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/fees', feesRoutes);
 app.use('/api/dashboards', dashboardRoutes);
+app.use('/api/dashboards', gmDashboardRoutes);
 app.use('/api/thresholds', thresholdRoutes);
 app.use('/api/satisfaction', satisfactionRoutes);
 app.use('/api/exemptions', exemptionRoutes);

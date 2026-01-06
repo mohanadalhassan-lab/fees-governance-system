@@ -142,7 +142,8 @@ const seedDatabase = async () => {
         'RET_MASS_LOCALTRF', 'RETAIL', 'MASS', 'Transfers', 'Local Transfer to Other Bank',
         'Local transfer to other local bank', 'TIERED', 'QAR', NULL, NULL, 
         '2025-01-01', 'active', 'Retail Mass Tariff 2025'
-      ) RETURNING tariff_id
+      ) ON CONFLICT (tariff_code) DO UPDATE SET status = 'active'
+      RETURNING tariff_id
     `);
     const localTransferTariffId = localTransferRes.rows[0].tariff_id;
 
@@ -243,6 +244,406 @@ const seedDatabase = async () => {
         'Letter of Guarantee issuance', 'PERCENTAGE', 'QAR', 
         '{"monthly_rate": 0.20, "min_months": 3}', 
         500.00, '2025-01-01', 'active', 'Trade Finance Tariff 2025'
+      )
+    `);
+
+    // ========================================
+    // RETAIL MASS - Additional Fees
+    // ========================================
+    
+    // ATM Withdrawal
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_ATM_INTL', 'RETAIL', 'MASS', 'ATM', 'International Withdrawal',
+        'ATM withdrawal outside Qatar', 'FIXED', 'QAR', 
+        '{"amount": 10.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // Account Statement
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_STMT_PAPER', 'RETAIL', 'MASS', 'Statements', 'Paper Statement',
+        'Paper account statement', 'FIXED', 'QAR', 
+        '{"amount": 25.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // Checkbook Issuance
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_CHECKBOOK', 'RETAIL', 'MASS', 'Checks', 'Checkbook Issuance',
+        'Checkbook issuance (25 leaves)', 'FIXED', 'QAR', 
+        '{"amount": 50.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // Stop Cheque
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_CHEQUE_STOP', 'RETAIL', 'MASS', 'Checks', 'Stop Cheque',
+        'Stop cheque payment', 'FIXED', 'QAR', 
+        '{"amount": 50.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // Debit Card Annual Fee
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_CARD_DEBIT', 'RETAIL', 'MASS', 'Cards', 'Debit Card Annual',
+        'Debit card annual fee', 'FIXED', 'QAR', 
+        '{"amount": 100.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // Credit Card Annual Fee
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_CARD_CREDIT', 'RETAIL', 'MASS', 'Cards', 'Credit Card Annual',
+        'Credit card annual fee', 'FIXED', 'QAR', 
+        '{"amount": 300.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // SMS Alerts
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_SMS_MONTHLY', 'RETAIL', 'MASS', 'Services', 'SMS Alerts',
+        'SMS alerts monthly subscription', 'FIXED', 'QAR', 
+        '{"amount": 10.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // Swift Transfer Outgoing
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_MASS_SWIFT_OUT', 'RETAIL', 'MASS', 'Transfers', 'SWIFT Outgoing',
+        'SWIFT transfer outgoing', 'FIXED', 'QAR', 
+        '{"amount": 75.00}', '2025-01-01', 'active', 'Retail Mass Tariff 2025'
+      )
+    `);
+
+    // ========================================
+    // RETAIL PRIVATE - Preferential Rates
+    // ========================================
+
+    // Private - Local Transfer
+    const privateLocalRes = await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, min_amount, max_amount, effective_from, status, source_reference
+      ) VALUES (
+        'RET_PRIV_LOCALTRF', 'RETAIL', 'PRIVATE', 'Transfers', 'Local Transfer',
+        'Local transfer to other bank (Private)', 'TIERED', 'QAR', NULL, NULL, 
+        '2025-01-01', 'active', 'Retail Private Tariff 2025'
+      ) RETURNING tariff_id
+    `);
+    const privateLocalTariffId = privateLocalRes.rows[0].tariff_id;
+
+    await query(
+      'INSERT INTO tariff_tiers (tariff_id, tier_level, range_from, range_to, fee_value) VALUES ($1, $2, $3, $4, $5)',
+      [privateLocalTariffId, 1, 0, 100, 0.40]
+    );
+    await query(
+      'INSERT INTO tariff_tiers (tariff_id, tier_level, range_from, range_to, fee_value) VALUES ($1, $2, $3, $4, $5)',
+      [privateLocalTariffId, 2, 100, 1000000, 3.00]
+    );
+    await query(
+      'INSERT INTO tariff_tiers (tariff_id, tier_level, range_from, range_to, fee_value) VALUES ($1, $2, $3, $4, $5)',
+      [privateLocalTariffId, 3, 1000000, 999999999, 5.00]
+    );
+
+    // Private - SWIFT
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_PRIV_SWIFT_OUT', 'RETAIL', 'PRIVATE', 'Transfers', 'SWIFT Outgoing',
+        'SWIFT transfer outgoing (Private)', 'FIXED', 'QAR', 
+        '{"amount": 50.00}', '2025-01-01', 'active', 'Retail Private Tariff 2025'
+      )
+    `);
+
+    // Private - Debit Card
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_PRIV_CARD_DEBIT', 'RETAIL', 'PRIVATE', 'Cards', 'Debit Card Annual',
+        'Platinum debit card annual fee', 'FIXED', 'QAR', 
+        '{"amount": 0.00}', '2025-01-01', 'active', 'Retail Private Tariff 2025'
+      )
+    `);
+
+    // Private - Credit Card
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_PRIV_CARD_CREDIT', 'RETAIL', 'PRIVATE', 'Cards', 'Credit Card Annual',
+        'Platinum credit card annual fee', 'FIXED', 'QAR', 
+        '{"amount": 200.00}', '2025-01-01', 'active', 'Retail Private Tariff 2025'
+      )
+    `);
+
+    // Private - Checkbook
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_PRIV_CHECKBOOK', 'RETAIL', 'PRIVATE', 'Checks', 'Checkbook Issuance',
+        'Checkbook issuance (Private)', 'FIXED', 'QAR', 
+        '{"amount": 0.00}', '2025-01-01', 'active', 'Retail Private Tariff 2025'
+      )
+    `);
+
+    // ========================================
+    // RETAIL TAMAYUZ - VIP Package
+    // ========================================
+
+    // Tamayuz - All Transfers Free
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_TAMA_LOCALTRF', 'RETAIL', 'TAMAYUZ', 'Transfers', 'Local Transfer',
+        'Local transfer (Tamayuz VIP)', 'FIXED', 'QAR', 
+        '{"amount": 0.00}', '2025-01-01', 'active', 'Retail Tamayuz Tariff 2025'
+      )
+    `);
+
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_TAMA_SWIFT_OUT', 'RETAIL', 'TAMAYUZ', 'Transfers', 'SWIFT Outgoing',
+        'SWIFT transfer (Tamayuz VIP)', 'FIXED', 'QAR', 
+        '{"amount": 0.00}', '2025-01-01', 'active', 'Retail Tamayuz Tariff 2025'
+      )
+    `);
+
+    // Tamayuz - Premium Services
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_TAMA_CARD_INFINITE', 'RETAIL', 'TAMAYUZ', 'Cards', 'Infinite Card',
+        'Visa Infinite card annual fee', 'FIXED', 'QAR', 
+        '{"amount": 0.00}', '2025-01-01', 'active', 'Retail Tamayuz Tariff 2025'
+      )
+    `);
+
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'RET_TAMA_RELATIONSHIP', 'RETAIL', 'TAMAYUZ', 'Services', 'Relationship Package',
+        'Tamayuz relationship annual package', 'FIXED', 'QAR', 
+        '{"amount": 1000.00}', '2025-01-01', 'active', 'Retail Tamayuz Tariff 2025'
+      )
+    `);
+
+    // ========================================
+    // CORPORATE - Trade Finance Additional
+    // ========================================
+
+    // Export LC Advising
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, min_amount, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_EXPORT_LC_ADVISE', 'CORPORATE', NULL, 'Trade Finance', 'Export LC Advising',
+        'Export LC advising fee', 'PERCENTAGE', 'QAR', 
+        '{"rate": 0.125}', 
+        250.00, '2025-01-01', 'active', 'Trade Finance Tariff 2025'
+      )
+    `);
+
+    // LC Amendment
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_LC_AMENDMENT', 'CORPORATE', NULL, 'Trade Finance', 'LC Amendment',
+        'LC amendment fee', 'FIXED', 'QAR', 
+        '{"amount": 200.00}', '2025-01-01', 'active', 'Trade Finance Tariff 2025'
+      )
+    `);
+
+    // Bill Discounting
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_BILL_DISCOUNT', 'CORPORATE', NULL, 'Trade Finance', 'Bill Discounting',
+        'Bill discounting service', 'PERCENTAGE', 'QAR', 
+        '{"rate": 0.25, "min_days": 30}', '2025-01-01', 'active', 'Trade Finance Tariff 2025'
+      )
+    `);
+
+    // Shipping Guarantee
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_SHIPPING_GUARANTEE', 'CORPORATE', NULL, 'Trade Finance', 'Shipping Guarantee',
+        'Shipping guarantee issuance', 'FIXED', 'QAR', 
+        '{"amount": 500.00}', '2025-01-01', 'active', 'Trade Finance Tariff 2025'
+      )
+    `);
+
+    // Collection Services
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, min_amount, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_COLLECTION', 'CORPORATE', NULL, 'Trade Finance', 'Collection Services',
+        'Documentary collection', 'PERCENTAGE', 'QAR', 
+        '{"rate": 0.15}', 
+        150.00, '2025-01-01', 'active', 'Trade Finance Tariff 2025'
+      )
+    `);
+
+    // ========================================
+    // CORPORATE - Services
+    // ========================================
+
+    // Cash Management Platform
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_CASH_MGMT_MONTHLY', 'CORPORATE', NULL, 'Services', 'Cash Management',
+        'Cash management platform monthly', 'FIXED', 'QAR', 
+        '{"amount": 500.00}', '2025-01-01', 'active', 'Corporate Services Tariff 2025'
+      )
+    `);
+
+    // Payroll Processing
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_PAYROLL', 'CORPORATE', NULL, 'Services', 'Payroll Services',
+        'Payroll processing per transaction', 'FIXED', 'QAR', 
+        '{"amount": 2.00}', '2025-01-01', 'active', 'Corporate Services Tariff 2025'
+      )
+    `);
+
+    // Corporate Card
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_CARD_ANNUAL', 'CORPORATE', NULL, 'Cards', 'Corporate Card',
+        'Corporate card annual fee', 'FIXED', 'QAR', 
+        '{"amount": 250.00}', '2025-01-01', 'active', 'Corporate Services Tariff 2025'
+      )
+    `);
+
+    // Account Analysis
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_ACCOUNT_ANALYSIS', 'CORPORATE', NULL, 'Services', 'Account Analysis',
+        'Detailed account analysis report', 'FIXED', 'QAR', 
+        '{"amount": 100.00}', '2025-01-01', 'active', 'Corporate Services Tariff 2025'
+      )
+    `);
+
+    // Treasury Services
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_TREASURY_ADVISORY', 'CORPORATE', NULL, 'Services', 'Treasury Advisory',
+        'Treasury advisory services', 'FIXED', 'QAR', 
+        '{"amount": 1000.00}', '2025-01-01', 'active', 'Corporate Services Tariff 2025'
+      )
+    `);
+
+    // ========================================
+    // CORPORATE - FX Services
+    // ========================================
+
+    // FX Transaction Fee
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, min_amount, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_FX_TRANSACTION', 'CORPORATE', NULL, 'FX', 'FX Transaction',
+        'Foreign exchange transaction fee', 'PERCENTAGE', 'QAR', 
+        '{"rate": 0.10}', 
+        50.00, '2025-01-01', 'active', 'Corporate FX Tariff 2025'
+      )
+    `);
+
+    // FX Forward Contract
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_FX_FORWARD', 'CORPORATE', NULL, 'FX', 'Forward Contract',
+        'FX forward contract booking', 'FIXED', 'QAR', 
+        '{"amount": 200.00}', '2025-01-01', 'active', 'Corporate FX Tariff 2025'
+      )
+    `);
+
+    // Currency Swap
+    await query(`
+      INSERT INTO tariff_catalog (
+        tariff_code, segment, tier, category, subcategory, fee_name, fee_type, 
+        currency, formula, min_amount, effective_from, status, source_reference
+      ) VALUES (
+        'CORP_CURRENCY_SWAP', 'CORPORATE', NULL, 'FX', 'Currency Swap',
+        'Currency swap arrangement', 'PERCENTAGE', 'QAR', 
+        '{"rate": 0.15}', 
+        300.00, '2025-01-01', 'active', 'Corporate FX Tariff 2025'
       )
     `);
 
