@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-executive-slate;
+  }
+  
+  body {
+    @apply bg-executive-cream text-executive-navy antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .executive-card {
+    @apply bg-white rounded-lg shadow-executive border border-executive-pearl p-6;
+  }
+  
+  .executive-stat {
+    @apply executive-card;
+  }
+  
+  .stat-label {
+    @apply text-sm font-medium text-executive-steel uppercase tracking-wider mb-2;
+  }
+  
+  .stat-value {
+    @apply text-3xl font-bold text-executive-navy;
+  }
+  
+  .stat-change {
+    @apply text-sm font-medium mt-1;
+  }
+  
+  .stat-change.positive {
+    @apply text-success;
+  }
+  
+  .stat-change.negative {
+    @apply text-danger;
+  }
+  
+  .executive-button {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply executive-button bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply executive-button bg-executive-steel text-white hover:bg-executive-muted focus:ring-executive-steel;
+  }
+  
+  .btn-outline {
+    @apply executive-button bg-transparent border-2 border-executive-steel text-executive-steel hover:bg-executive-pearl focus:ring-executive-steel;
+  }
+  
+  .btn-success {
+    @apply executive-button bg-success text-white hover:bg-success-dark focus:ring-success;
+  }
+  
+  .btn-danger {
+    @apply executive-button bg-danger text-white hover:bg-danger-dark focus:ring-danger;
+  }
+  
+  .executive-input {
+    @apply w-full px-4 py-2 border border-executive-silver rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+  
+  .executive-table {
+    @apply w-full;
+  }
+  
+  .executive-table thead {
+    @apply bg-executive-platinum;
+  }
+  
+  .executive-table th {
+    @apply px-6 py-3 text-left text-xs font-semibold text-executive-muted uppercase tracking-wider;
+  }
+  
+  .executive-table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm;
+  }
+  
+  .executive-table tbody tr {
+    @apply border-t border-executive-pearl hover:bg-executive-cream transition-colors;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply badge bg-success-light text-success-dark;
+  }
+  
+  .badge-warning {
+    @apply badge bg-warning-light text-warning-dark;
+  }
+  
+  .badge-danger {
+    @apply badge bg-danger-light text-danger-dark;
+  }
+  
+  .badge-info {
+    @apply badge bg-info-light text-info-dark;
+  }
+  
+  .badge-orange {
+    @apply badge bg-orange-100 text-orange-700;
+  }
+  
+  .badge-neutral {
+    @apply badge bg-executive-pearl text-executive-muted;
+  }
+  
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-3 text-executive-steel hover:bg-executive-platinum hover:text-executive-navy rounded-lg transition-all duration-200 cursor-pointer;
+  }
+  
+  .nav-item.active {
+    @apply bg-primary-50 text-primary-700 font-medium;
+  }
+  
+  .page-header {
+    @apply mb-8;
+  }
+  
+  .page-title {
+    @apply text-3xl font-bold text-executive-navy mb-2;
+  }
+  
+  .page-subtitle {
+    @apply text-executive-steel;
+  }
+  
+  .metric-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8;
+  }
+  
+  .content-section {
+    @apply executive-card mb-6;
+  }
+  
+  .section-title {
+    @apply text-xl font-semibold text-executive-navy mb-4;
+  }
+  
+  .empty-state {
+    @apply text-center py-12;
+  }
+  
+  .empty-state-icon {
+    @apply mx-auto h-12 w-12 text-executive-silver mb-4;
+  }
+  
+  .empty-state-title {
+    @apply text-lg font-medium text-executive-muted mb-2;
+  }
+  
+  .empty-state-text {
+    @apply text-sm text-executive-steel;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

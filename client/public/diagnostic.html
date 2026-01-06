@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Diagnostic Tool - Fees Governance System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .test-section h2 {
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .test-section h2::before {
+            content: '🧪';
+            font-size: 24px;
+        }
+        .result {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .result pre {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        .status.warning {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+        .status.info {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 18px;
+        }
+        .summary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .summary h3 {
+            margin-bottom: 10px;
+        }
+        .summary ul {
+            list-style: none;
+            padding-right: 20px;
+        }
+        .summary li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .summary li:last-child {
+            border-bottom: none;
+        }
+        .copy-btn {
+            background: #48bb78;
+            padding: 8px 20px;
+            font-size: 14px;
+            margin-top: 10px;
+            width: auto;
+            display: inline-block;
+        }
+        .empty {
+            color: #a0aec0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 أداة التشخيص التلقائي</h1>
+            <p>Fees Governance & Satisfaction Management System</p>
+            <p style="margin-top: 10px; font-size: 12px;">M.A - Simplify the Vision</p>
+        </div>
+        
+        <div class="content">
+            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ffc107;">
+                <strong>⚠️ هام:</strong> هذه أداة تشخيص فقط (READ-ONLY). لن تغيّر أي بيانات.
+            </div>
+
+            <button onclick="runDiagnostics()" id="runBtn">🚀 تشغيل الفحص الشامل</button>
+            
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        async function runDiagnostics() {
+            const resultsDiv = document.getElementById('results');
+            const runBtn = document.getElementById('runBtn');
+            
+            runBtn.disabled = true;
+            runBtn.textContent = '⏳ جاري الفحص...';
+            resultsDiv.innerHTML = '<div class="loading">🔄 جاري تشغيل الاختبارات...</div>';
+            
+            const report = {
+                timestamp: new Date().toLocaleString('ar-SA'),
+                tests: []
+            };
+
+            // Test 1: LocalStorage
+            const localStorageData = {};
+            const localStorageKeys = Object.keys(localStorage);
+            
+            if (localStorageKeys.length > 0) {
+                localStorageKeys.forEach(key => {
+                    localStorageData[key] = localStorage.getItem(key);
+                });
+            }
+            
+            const hasToken = localStorage.getItem('token') !== null;
+            const hasUser = localStorage.getItem('user') !== null;
+            const hasAuth = localStorage.getItem('auth') !== null;
+            const hasAccessToken = localStorage.getItem('access_token') !== null;
+            
+            report.tests.push({
+                name: '1️⃣ فحص LocalStorage',
+                status: localStorageKeys.length > 0 ? 'info' : 'warning',
+                data: {
+                    'عدد المفاتيح': localStorageKeys.length,
+                    'يوجد token': hasToken ? '✅ نعم' : '❌ لا',
+                    'يوجد user': hasUser ? '✅ نعم' : '❌ لا',
+                    'يوجد auth': hasAuth ? '✅ نعم' : '❌ لا',
+                    'يوجد access_token': hasAccessToken ? '✅ نعم' : '❌ لا',
+                    'البيانات الكاملة': localStorageKeys.length === 0 ? 'فارغ تماماً' : JSON.stringify(localStorageData, null, 2)
+                }
+            });
+
+            // Test 2: SessionStorage
+            const sessionStorageData = {};
+            const sessionStorageKeys = Object.keys(sessionStorage);
+            
+            if (sessionStorageKeys.length > 0) {
+                sessionStorageKeys.forEach(key => {
+                    sessionStorageData[key] = sessionStorage.getItem(key);
+                });
+            }
+            
+            report.tests.push({
+                name: '2️⃣ فحص SessionStorage',
+                status: sessionStorageKeys.length > 0 ? 'info' : 'success',
+                data: {
+                    'عدد المفاتيح': sessionStorageKeys.length,
+                    'البيانات': sessionStorageKeys.length === 0 ? 'فارغ (جيد)' : JSON.stringify(sessionStorageData, null, 2)
+                }
+            });
+
+            // Test 3: Current Route
+            report.tests.push({
+                name: '3️⃣ فحص المسار الحالي',
+                status: 'info',
+                data: {
+                    'pathname': window.location.pathname,
+                    'href': window.location.href,
+                    'search': window.location.search || 'لا يوجد',
+                    'hash': window.location.hash || 'لا يوجد',
+                    'history.state': JSON.stringify(history.state, null, 2) || 'null'
+                }
+            });
+
+            // Test 4: Console Errors
+            const consoleErrors = [];
+            const originalError = console.error;
+            console.error = function(...args) {
+                consoleErrors.push(args.join(' '));
+                originalError.apply(console, args);
+            };
+
+            setTimeout(() => {
+                console.error = originalError;
+            }, 1000);
+
+            report.tests.push({
+                name: '4️⃣ أخطاء Console',
+                status: consoleErrors.length > 0 ? 'error' : 'success',
+                data: {
+                    'عدد الأخطاء': consoleErrors.length,
+                    'الأخطاء': consoleErrors.length === 0 ? 'لا توجد أخطاء ✅' : consoleErrors.join('\n')
+                }
+            });
+
+            // Test 5: API Health Check
+            let apiStatus = { status: 'unknown', message: 'لم يتم الفحص بعد' };
+            try {
+                const response = await fetch('http://localhost:5001/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'test', password: 'test' })
+                });
+                
+                apiStatus = {
+                    status: response.ok ? 'success' : 'error',
+                    statusCode: response.status,
+                    statusText: response.statusText,
+                    message: response.ok ? 'Backend يعمل ✅' : `Backend يرجع ${response.status}`
+                };
+            } catch (error) {
+                apiStatus = {
+                    status: 'error',
+                    message: 'Backend لا يستجيب ❌',
+                    error: error.message
+                };
+            }
+
+            report.tests.push({
+                name: '5️⃣ فحص Backend API',
+                status: apiStatus.status === 'error' ? (apiStatus.statusCode === 401 ? 'success' : 'error') : apiStatus.status,
+                data: apiStatus
+            });
+
+            // Test 6: DOM Check
+            const bodyLength = document.body.innerHTML.length;
+            const hasRoot = document.getElementById('root') !== null;
+            const rootContent = hasRoot ? document.getElementById('root').innerHTML : 'لا يوجد #root';
+            
+            report.tests.push({
+                name: '6️⃣ فحص DOM',
+                status: bodyLength < 500 ? 'error' : 'success',
+                data: {
+                    'حجم body.innerHTML': `${bodyLength} حرف`,
+                    'يوجد #root': hasRoot ? '✅ نعم' : '❌ لا',
+                    'محتوى #root': rootContent.substring(0, 200) + (rootContent.length > 200 ? '...' : ''),
+                    'تقييم': bodyLength < 500 ? '⚠️ الصفحة فارغة تقريباً!' : '✅ يوجد محتوى'
+                }
+            });
+
+            // Test 7: React Detection
+            const hasReact = window.React !== undefined || document.querySelector('[data-reactroot]') !== null;
+            
+            report.tests.push({
+                name: '7️⃣ فحص React',
+                status: hasReact ? 'success' : 'error',
+                data: {
+                    'React محمّل': hasReact ? '✅ نعم' : '❌ لا',
+                    'نوع window.React': typeof window.React
+                }
+            });
+
+            // Generate HTML Report
+            let html = '';
+            
+            report.tests.forEach((test, index) => {
+                html += `
+                    <div class="test-section">
+                        <h2>
+                            ${test.name}
+                            <span class="status ${test.status}">${getStatusText(test.status)}</span>
+                        </h2>
+                        <div class="result">
+                            ${formatData(test.data)}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Summary
+            const errors = report.tests.filter(t => t.status === 'error').length;
+            const warnings = report.tests.filter(t => t.status === 'warning').length;
+            const success = report.tests.filter(t => t.status === 'success').length;
+
+            html += `
+                <div class="summary">
+                    <h3>📊 ملخص النتائج</h3>
+                    <ul>
+                        <li>✅ نجح: ${success} اختبار</li>
+                        <li>⚠️ تحذيرات: ${warnings} اختبار</li>
+                        <li>❌ أخطاء: ${errors} اختبار</li>
+                        <li>⏰ وقت الفحص: ${report.timestamp}</li>
+                    </ul>
+                    <button class="copy-btn" onclick="copyReport()">📋 نسخ التقرير الكامل</button>
+                </div>
+            `;
+
+            resultsDiv.innerHTML = html;
+            runBtn.disabled = false;
+            runBtn.textContent = '🔄 إعادة الفحص';
+
+            // Store report globally
+            window.diagnosticReport = report;
+        }
+
+        function getStatusText(status) {
+            const map = {
+                'success': '✅ نجح',
+                'error': '❌ خطأ',
+                'warning': '⚠️ تحذير',
+                'info': 'ℹ️ معلومات'
+            };
+            return map[status] || status;
+        }
+
+        function formatData(data) {
+            let html = '<pre>';
+            for (const [key, value] of Object.entries(data)) {
+                html += `<strong>${key}:</strong>\n${value}\n\n`;
+            }
+            html += '</pre>';
+            return html;
+        }
+
+        function copyReport() {
+            const report = window.diagnosticReport;
+            let text = '📋 DIAGNOSTIC REPORT - Fees Governance System\n';
+            text += '='.repeat(60) + '\n\n';
+            text += `⏰ Timestamp: ${report.timestamp}\n\n`;
+            
+            report.tests.forEach((test, index) => {
+                text += `${test.name}\n`;
+                text += `Status: ${getStatusText(test.status)}\n`;
+                text += '-'.repeat(60) + '\n';
+                for (const [key, value] of Object.entries(test.data)) {
+                    text += `${key}: ${value}\n`;
+                }
+                text += '\n';
+            });
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ تم نسخ التقرير! الصقه في المحادثة.');
+            }).catch(err => {
+                alert('❌ فشل النسخ. حاول يدوياً.');
+                console.log(text);
+            });
+        }
+    </script>
+</body>
+</html>
