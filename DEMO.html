@@ -445,6 +445,68 @@
             box-shadow: var(--shadow-lg);
         }
 
+        .fullscreen-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+        }
+
+        .fullscreen-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
+            background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
+        }
+
+        .fullscreen-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* Fullscreen modal styles */
+        .modal:fullscreen {
+            background: var(--white);
+            padding: 20px;
+        }
+
+        .modal:-webkit-full-screen {
+            background: var(--white);
+            padding: 20px;
+        }
+
+        .modal:-moz-full-screen {
+            background: var(--white);
+            padding: 20px;
+        }
+
+        .modal:-ms-fullscreen {
+            background: var(--white);
+            padding: 20px;
+        }
+
+        .modal:fullscreen .modal-content {
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .modal:-webkit-full-screen .modal-content {
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0;
+            overflow-y: auto;
+        }
+
         .system-capabilities {
             background: var(--white);
             border-radius: 16px;
@@ -1123,7 +1185,13 @@
             }
             
             let html = `
-                <h2>${demo.title}</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="margin: 0;">${demo.title}</h2>
+                    <button onclick="toggleFullscreen()" class="fullscreen-btn" title="Fullscreen / Exit Fullscreen">
+                        <span class="fullscreen-icon">⛶</span>
+                        <span class="fullscreen-text">Fullscreen</span>
+                    </button>
+                </div>
                 <p style="font-size: 18px; color: var(--text-gray); margin-bottom: 24px;">Logged in as: <strong style="color: var(--gold);">${demo.name}</strong></p>
                 
                 <div class="dashboard-preview">
@@ -1174,7 +1242,56 @@
         }
 
         function closeModal() {
-            document.getElementById('roleModal').classList.remove('active');
+            const modal = document.getElementById('roleModal');
+            modal.classList.remove('active');
+            // Exit fullscreen if active
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        }
+
+        function toggleFullscreen() {
+            const modal = document.getElementById('roleModal');
+            
+            if (!document.fullscreenElement) {
+                // Enter fullscreen
+                if (modal.requestFullscreen) {
+                    modal.requestFullscreen();
+                } else if (modal.webkitRequestFullscreen) { /* Safari */
+                    modal.webkitRequestFullscreen();
+                } else if (modal.msRequestFullscreen) { /* IE11 */
+                    modal.msRequestFullscreen();
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Listen for fullscreen changes to update button
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+        document.addEventListener('msfullscreenchange', updateFullscreenButton);
+
+        function updateFullscreenButton() {
+            const btn = document.querySelector('.fullscreen-btn');
+            if (btn) {
+                const icon = btn.querySelector('.fullscreen-icon');
+                const text = btn.querySelector('.fullscreen-text');
+                if (document.fullscreenElement) {
+                    icon.textContent = '⛶';
+                    text.textContent = 'Exit Fullscreen';
+                } else {
+                    icon.textContent = '⛶';
+                    text.textContent = 'Fullscreen';
+                }
+            }
         }
 
         function showFeatureDetails(featureKey) {
@@ -1308,7 +1425,13 @@
             const content = document.getElementById('modalContent');
 
             let html = `
-                <h2>${feature.title}</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="margin: 0;">${feature.title}</h2>
+                    <button onclick="toggleFullscreen()" class="fullscreen-btn" title="Fullscreen / Exit Fullscreen">
+                        <span class="fullscreen-icon">⛶</span>
+                        <span class="fullscreen-text">Fullscreen</span>
+                    </button>
+                </div>
                 <p style="font-size: 18px; color: var(--text-gray); margin-bottom: 24px;">${feature.description}</p>
                 
                 <div class="dashboard-preview">
