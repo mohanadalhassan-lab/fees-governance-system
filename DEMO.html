@@ -740,11 +740,11 @@
                     <div class="role-title">GM Finance</div>
                     <div class="role-name">Khalid Al-Mannai</div>
                     <ul class="role-features">
+                        <li>Financial Reconciliation</li>
                         <li>Revenue Analysis</li>
                         <li>Collection Rates</li>
                         <li>Gap Analysis</li>
                         <li>Top Revenue Fees</li>
-                        <li>Financial Reports</li>
                     </ul>
                     <button class="demo-btn">Explore Dashboard →</button>
                 </div>
@@ -968,6 +968,8 @@
                     { value: '2026 vs 2025', label: 'Annual: +QAR 420K' }
                 ],
                 features: [
+                    '🏛️ Financial Reconciliation: Service-based Expected vs Actual (GL) comparison',
+                    'Golden Reference Validation: GL/PL validated against approved tariffs',
                     'Revenue analysis by segment (Retail vs Corporate)',
                     'Collection rates by category (Transfers, Cards, Trade, etc.)',
                     'Gap analysis with exemptions impact breakdown',
@@ -978,6 +980,15 @@
                     'Period filtering (Monthly/Quarterly/Annual)'
                 ],
                 capabilities: {
+                    '🏛️ Financial Reconciliation (READ-ONLY)': [
+                        '⭐ Golden Reference: Approved fee definitions and published tariffs are the single source of truth',
+                        '✅ GL / PL entries are validated against approved fees (not the other way)',
+                        'Service-based reconciliation view: Expected vs Actual (GL)',
+                        'Variance detection: Match / Shortfall / Excess / Review',
+                        'WPS Salary File: QAR 12.13M (Expected) vs QAR 12.13M (GL) = ✅ Match',
+                        'Period comparison: Monthly / Quarterly / Annual reconciliation',
+                        '📊 Audit-ready visibility for CFO / Finance / Compliance review'
+                    ],
                     'Revenue Analysis': [
                         'Expected vs Realized revenue comparison',
                         'Revenue breakdown by segment (Retail/Corporate)',
@@ -1473,6 +1484,108 @@
                         </ul>
                     </div>
                 </div>
+                
+                ${role === 'finance' ? `
+                <!-- Financial Reconciliation View (READ-ONLY) -->
+                <div style="margin: 24px 0; padding: 20px; background: linear-gradient(135deg, rgba(30, 58, 138, 0.03), rgba(212, 175, 55, 0.03)); border-radius: 16px; border: 2px solid var(--gold);">
+                    <h4 style="color: var(--primary-blue); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                        🏛️ Financial Reconciliation - Service vs GL/PL (Read-Only View)
+                    </h4>
+                    <div style="font-size: 12px; color: var(--text-gray); margin-bottom: 16px; padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px;">
+                        <strong>⭐ Golden Reference Principle:</strong> Approved fee definitions and published tariffs are the source of truth. GL/PL entries below are validated against them.
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                            <thead>
+                                <tr style="background: var(--primary-blue); color: white;">
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Service / Fee Name</th>
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Fee Code</th>
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">GL / PL Account</th>
+                                    <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Expected (QAR)</th>
+                                    <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Actual GL (QAR)</th>
+                                    <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Variance</th>
+                                    <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background: white;">
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">WPS Salary File Processing</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">FEE-WPS-001</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">PL52018</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-weight: bold;">12,127,750</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">12,127,750</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; color: green; font-weight: bold;">0</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅ Match</td>
+                                </tr>
+                                <tr style="background: #f9f9f9;">
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Import LC Processing</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">FEE-LC-IMP</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">PL52015</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-weight: bold;">4,856,250</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">4,856,250</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; color: green; font-weight: bold;">0</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅ Match</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Standby LC</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">FEE-LC-STB</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">PL52016</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-weight: bold;">3,968,750</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">3,968,750</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; color: green; font-weight: bold;">0</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅ Match</td>
+                                </tr>
+                                <tr style="background: #f9f9f9;">
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Letter of Guarantee</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">FEE-LG-001</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">PL52017</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-weight: bold;">3,657,500</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">3,657,500</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; color: green; font-weight: bold;">0</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅ Match</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Corporate Card Annual</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">FEE-CRD-CRP</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; font-family: monospace;">PL52020</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-weight: bold;">1,725,000</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">1,725,000</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; color: green; font-weight: bold;">0</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">✅ Match</td>
+                                </tr>
+                                <tr style="background: #fff9e6;">
+                                    <td colspan="7" style="padding: 12px; text-align: center; font-size: 12px; color: var(--text-gray); border: 1px solid #ddd;">
+                                        <strong>Note:</strong> This is a display-only reconciliation view. Expected amounts are based on approved fee definitions. 
+                                        All values shown represent successful reconciliation between approved tariffs and GL/PL postings.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top: 16px; padding: 12px; background: rgba(30, 58, 138, 0.05); border-radius: 8px; font-size: 12px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                            <div>
+                                <strong style="color: var(--primary-blue);">Status Legend:</strong>
+                                <div style="margin-top: 4px; line-height: 1.6;">
+                                    ✅ Match - GL matches approved tariff<br>
+                                    ⚠️ Shortfall - GL below expected<br>
+                                    📊 Excess - GL above expected<br>
+                                    🔍 Review - Requires investigation
+                                </div>
+                            </div>
+                            <div>
+                                <strong style="color: var(--primary-blue);">Reconciliation Scope:</strong>
+                                <div style="margin-top: 4px; line-height: 1.6;">
+                                    Period: 2025 Full Year<br>
+                                    Total Services: 5 Corporate Services<br>
+                                    Match Rate: 100%<br>
+                                    Last Updated: Jan 2026
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
                 
                 <div class="system-capabilities">
                     <h4 style="font-size: 20px; margin-bottom: 20px; color: var(--primary-blue); text-align: center;">
