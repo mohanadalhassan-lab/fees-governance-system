@@ -584,38 +584,36 @@
 </head>
 <body>
     <div class="container">
-        <!-- Logo Header - Top Left -->
+        <!-- Logo Header - Top Left (No Card) -->
         <div style="position: absolute; top: 15px; left: 20px; z-index: 100;">
-            <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 5px 10px; border-radius: 6px; border: 2px solid #D4AF37;">
-                <svg width="140" height="45" viewBox="0 0 140 45" xmlns="http://www.w3.org/2000/svg">
-                <!-- Digital Network Background -->
-                <defs>
-                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.9" />
-                        <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:0.9" />
-                        <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0.9" />
-                    </linearGradient>
-                </defs>
-                
-                <!-- Abstract Digital Flow Lines -->
-                <path d="M8,22 Q23,12 38,22 T68,22" stroke="url(#logoGradient)" stroke-width="1.5" fill="none" opacity="0.5"/>
-                <path d="M8,26 Q23,36 38,26 T68,26" stroke="url(#logoGradient)" stroke-width="1.5" fill="none" opacity="0.5"/>
-                
-                <!-- Connection Nodes -->
-                <circle cx="8" cy="22" r="2" fill="#D4AF37" opacity="0.9"/>
-                <circle cx="38" cy="22" r="2" fill="#FFFFFF" opacity="0.9"/>
-                <circle cx="68" cy="22" r="2" fill="#D4AF37" opacity="0.9"/>
-                
-                <!-- M.A Initials (Prominent) - White with Gold Shadow -->
-                <text x="6" y="18" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" stroke="#D4AF37" stroke-width="0.4">M.A</text>
-                
-                <!-- Simplify The Vision Text - White -->
-                <text x="6" y="32" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#FFFFFF" letter-spacing="0.5" opacity="0.95">Simplify The Vision</text>
-                
-                <!-- Digital Accent Line - Gold -->
-                <line x1="6" y1="35" x2="70" y2="35" stroke="#D4AF37" stroke-width="1.5" opacity="0.8"/>
-            </svg>
-            </div>
+            <svg width="140" height="45" viewBox="0 0 140 45" xmlns="http://www.w3.org/2000/svg">
+            <!-- Digital Network Background -->
+            <defs>
+                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.9" />
+                    <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:0.9" />
+                    <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0.9" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Abstract Digital Flow Lines -->
+            <path d="M8,22 Q23,12 38,22 T68,22" stroke="url(#logoGradient)" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <path d="M8,26 Q23,36 38,26 T68,26" stroke="url(#logoGradient)" stroke-width="1.5" fill="none" opacity="0.5"/>
+            
+            <!-- Connection Nodes -->
+            <circle cx="8" cy="22" r="2" fill="#D4AF37" opacity="0.9"/>
+            <circle cx="38" cy="22" r="2" fill="#FFFFFF" opacity="0.9"/>
+            <circle cx="68" cy="22" r="2" fill="#D4AF37" opacity="0.9"/>
+            
+            <!-- M.A Initials (Prominent) - White with Gold Shadow -->
+            <text x="6" y="18" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" stroke="#D4AF37" stroke-width="0.4">M.A</text>
+            
+            <!-- Simplify The Vision Text - White -->
+            <text x="6" y="32" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#FFFFFF" letter-spacing="0.5" opacity="0.95">Simplify The Vision</text>
+            
+            <!-- Digital Accent Line - Gold -->
+            <line x1="6" y1="35" x2="70" y2="35" stroke="#D4AF37" stroke-width="1.5" opacity="0.8"/>
+        </svg>
         </div>
         
         <!-- Page Header - Center -->
@@ -740,6 +738,36 @@
                     <button class="demo-btn">Explore Dashboard →</button>
                 </div>
 
+                <!-- GM Retail Card -->
+                <div class="role-card" onclick="showRoleDemo('retail')">
+                    <div class="role-icon">🏦</div>
+                    <div class="role-title">GM Retail Banking</div>
+                    <div class="role-name">Ahmed Al-Kuwari</div>
+                    <ul class="role-features">
+                        <li>Segment Analysis</li>
+                        <li>Mass/Private/Tamayuz</li>
+                        <li>Fee Performance</li>
+                        <li>Customer Satisfaction</li>
+                        <li>Retail Reports</li>
+                    </ul>
+                    <button class="demo-btn">Explore Dashboard →</button>
+                </div>
+
+                <!-- GM Corporate Card -->
+                <div class="role-card" onclick="showRoleDemo('corporate')">
+                    <div class="role-icon">🏢</div>
+                    <div class="role-title">GM Corporate Banking</div>
+                    <div class="role-name">Fatima Al-Thani</div>
+                    <ul class="role-features">
+                        <li>Category Breakdown</li>
+                        <li>Trade Finance</li>
+                        <li>Corporate Services</li>
+                        <li>FX Operations</li>
+                        <li>Corporate Reports</li>
+                    </ul>
+                    <button class="demo-btn">Explore Dashboard →</button>
+                </div>
+
                 <!-- GM Finance Card -->
                 <div class="role-card" onclick="showRoleDemo('finance')">
                     <div class="role-icon">💰</div>
@@ -781,36 +809,6 @@
                         <li>Regulatory Metrics</li>
                         <li>Audit Trail</li>
                         <li>Compliance Reports</li>
-                    </ul>
-                    <button class="demo-btn">Explore Dashboard →</button>
-                </div>
-
-                <!-- GM Retail Card -->
-                <div class="role-card" onclick="showRoleDemo('retail')">
-                    <div class="role-icon">🏦</div>
-                    <div class="role-title">GM Retail Banking</div>
-                    <div class="role-name">Ahmed Al-Kuwari</div>
-                    <ul class="role-features">
-                        <li>Segment Analysis</li>
-                        <li>Mass/Private/Tamayuz</li>
-                        <li>Fee Performance</li>
-                        <li>Customer Satisfaction</li>
-                        <li>Retail Reports</li>
-                    </ul>
-                    <button class="demo-btn">Explore Dashboard →</button>
-                </div>
-
-                <!-- GM Corporate Card -->
-                <div class="role-card" onclick="showRoleDemo('corporate')">
-                    <div class="role-icon">🏢</div>
-                    <div class="role-title">GM Corporate Banking</div>
-                    <div class="role-name">Fatima Al-Thani</div>
-                    <ul class="role-features">
-                        <li>Category Breakdown</li>
-                        <li>Trade Finance</li>
-                        <li>Corporate Services</li>
-                        <li>FX Operations</li>
-                        <li>Corporate Reports</li>
                     </ul>
                     <button class="demo-btn">Explore Dashboard →</button>
                 </div>
