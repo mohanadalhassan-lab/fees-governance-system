@@ -867,98 +867,104 @@
                 title: '👑 Group Chief Executive Officer Dashboard',
                 name: 'B.G',
                 data: [
-                    { value: '98%', label: 'Global Threshold 2026' },
-                    { value: '8', label: 'Not Satisfied Fees' },
-                    { value: '22', label: 'Exempted Customers' },
-                    { value: 'QAR 35K', label: 'Top Fee Revenue' },
-                    { value: 'Q4 vs Q3', label: 'Quarterly Trend: +12%' },
-                    { value: '2026 vs 2025', label: 'Annual Growth: +18%' }
+                    { value: 'QAR 24.8M', label: 'Total Revenue 2026', trend: '+18%', comparison: 'vs 2025: QAR 21.0M' },
+                    { value: '64%', label: 'Retail Banking Share', amount: 'QAR 15.9M', change: '+15%' },
+                    { value: '36%', label: 'Corporate Banking Share', amount: 'QAR 8.9M', change: '+23%' },
+                    { value: '98%', label: 'Target Threshold 2026', status: 'On Track' }
                 ],
                 features: [
-                    'Set and monitor global threshold (currently 98% for 2026)',
-                    'View satisfaction status across all fees',
-                    'Track exemptions (14.7% of customers)',
-                    'Approve GM acknowledgments',
-                    'Quarter-over-Quarter performance analysis',
-                    'Year-over-Year growth tracking',
-                    'Access executive overview and top performing fees',
-                    'Make final approval decisions'
+                    '📊 Executive Summary: Bank-wide fee revenue performance',
+                    '🏦 Retail Banking (64%): QAR 15.9M - Mass, Private, Tamayuz segments',
+                    '🏢 Corporate Banking (36%): QAR 8.9M - Trade Finance, WPS, Corporate Services',
+                    '📈 YoY Growth: +18% total (+QAR 3.8M vs 2025)',
+                    '⚡ Quick Actions: Satisfaction assessment per business group',
+                    '🎯 Automated Task Creation: System generates follow-up tasks based on satisfaction status',
+                    '✅ Governance: Single golden reference - Approved tariffs only',
+                    '🔍 Deep Dive: Access detailed dashboards by clicking business group cards'
                 ],
                 capabilities: {
-                    'Governance Principles': [
-                        '<strong>🏆 Single Golden Reference:</strong> Approved fee definitions and published customer tariffs are the ONLY source of truth',
+                    '📊 Executive Summary - 2026 Performance': [
+                        '<strong style="color: #D4AF37;">Total Fee Revenue 2026:</strong> QAR 24.8M',
+                        '<strong>vs 2025:</strong> QAR 21.0M (+QAR 3.8M, +18% YoY)',
+                        '<strong>Retail Banking:</strong> QAR 15.9M (64%) - Growth +15%',
+                        '<strong>Corporate Banking:</strong> QAR 8.9M (36%) - Growth +23%',
+                        '<strong>Target Threshold:</strong> 98% collection rate (On Track)',
+                        '<strong>Strategic Insight:</strong> Corporate growing faster than Retail'
+                    ],
+                    '🏦 Retail Banking Performance': [
+                        '<strong>Total Revenue:</strong> QAR 15.9M (2026) vs QAR 13.8M (2025)',
+                        '<strong>Growth Rate:</strong> +15% YoY (+QAR 2.1M)',
+                        '<strong>Market Share:</strong> 64% of total fee revenue',
+                        '<strong>Segments:</strong> Mass (45%), Private (35%), Tamayuz (20%)',
+                        '<strong>Top Fee:</strong> Account Maintenance - QAR 4.2M',
+                        '<strong>Collection Rate:</strong> 96% (Above target)',
+                        '<strong>Customer Base:</strong> ~850K customers',
+                        '✅ <strong>Status:</strong> Ready for satisfaction assessment'
+                    ],
+                    '🏢 Corporate Banking Performance': [
+                        '<strong>Total Revenue:</strong> QAR 8.9M (2026) vs QAR 7.2M (2025)',
+                        '<strong>Growth Rate:</strong> +23% YoY (+QAR 1.7M)',
+                        '<strong>Market Share:</strong> 36% of total fee revenue',
+                        '<strong>Categories:</strong> Trade Finance (40%), WPS (35%), Corporate Services (25%)',
+                        '<strong>Top Fee:</strong> WPS Salary Transfer - QAR 12.1M',
+                        '<strong>Collection Rate:</strong> 99% (Excellent)',
+                        '<strong>Customer Base:</strong> ~3,200 corporate clients',
+                        '✅ <strong>Status:</strong> Ready for satisfaction assessment'
+                    ],
+                    '📈 Visual Performance Chart': [
+                        'Interactive bar chart: 2025 vs 2026 comparison',
+                        'Retail segment trend visualization',
+                        'Corporate segment trend visualization',
+                        'Total revenue growth indicator',
+                        'Target threshold line overlay',
+                        'Quick visual insights at-a-glance'
+                    ],
+                    '⚡ Satisfaction Assessment Actions': [
+                        '<strong>✅ Mark as Satisfied:</strong> Business group meets expectations',
+                        '<strong>⚠️ Mark as Not Satisfied:</strong> Performance needs review',
+                        '<strong>🤖 Automated Task Creation:</strong> System creates tasks instantly',
+                        '<strong>Task Recipients:</strong> Business Group GM + GM Finance',
+                        '<strong>Task Includes:</strong> Performance data, gaps, action items',
+                        '<strong>Tracking:</strong> Tasks tracked until resolution',
+                        '<strong>Notifications:</strong> Email & in-app alerts sent immediately'
+                    ],
+                    '🎯 Task Auto-Generation Logic': [
+                        'When "Not Satisfied" clicked → Task created for:',
+                        '1️⃣ <strong>Business Group GM:</strong> Review performance, identify gaps, propose action plan',
+                        '2️⃣ <strong>GM Finance:</strong> Analyze financial impact, collection issues, revenue recovery',
+                        '<strong>Task Priority:</strong> High (CEO escalation)',
+                        '<strong>Task Due Date:</strong> 7 business days',
+                        '<strong>Task Contents:</strong> Performance snapshot, YoY comparison, specific concerns',
+                        '<strong>Follow-up:</strong> CEO notified upon task completion'
+                    ],
+                    '🏆 Governance Principles': [
+                        '<strong>Single Golden Reference:</strong> Approved fee definitions and published customer tariffs are the ONLY source of truth',
                         'GL / PL postings are validated AGAINST approved tariffs',
                         'Reconciliation compares financial records to governance-approved fees',
                         'Exception detection based on deviation from published tariffs',
-                        'Audit trail for all fee approvals and publications'
+                        'Audit trail for all fee approvals and publications',
+                        'CEO has final authority on satisfaction status'
                     ],
-                    'Dashboard Features': [
-                        'Real-time global threshold monitoring',
-                        'Satisfaction status overview (8 Not Satisfied, 0 Satisfied)',
-                        'Exemptions summary (22 customers exempted)',
-                        'Top 10 fees by expected revenue',
-                        'WPS Salary Transfer Fees: QAR 12.1M (2025)',
-                        'Pending GM acknowledgments tracking',
-                        'Executive KPIs and metrics'
+                    '🔍 Deep Dive Access': [
+                        'Click Retail card → Access GM Retail Banking full dashboard',
+                        'Click Corporate card → Access GM Corporate Banking full dashboard',
+                        'View detailed fee breakdowns by segment',
+                        'Access customer satisfaction metrics',
+                        'Review exemptions and exceptions',
+                        'Export detailed reports (PDF/Excel)',
+                        'Monitor real-time collection rates'
                     ],
-                    'WPS Salary Transfer Fees - Executive View': [
-                        '<strong>Total 2025 Revenue:</strong> QAR 12,127,750',
-                        '<strong>Category:</strong> Corporate Fees → WPS Services',
-                        '<strong>Posting Account:</strong> PL52018',
-                        '<strong>Historical Growth (2020-2025):</strong> +136%',
-                        '2020: QAR 5.13M → 2025: QAR 12.13M',
-                        '<strong>YoY 2025 vs 2024:</strong> +0.5% (Mature market)',
-                        'Strategic importance: Stable recurring revenue'
-                    ],
-                    'Quarterly Comparison (Q vs Q)': [
-                        'Q4 2026 vs Q3 2026: +12% revenue growth',
-                        'Quarter-over-quarter satisfaction improvement',
-                        'WPS stable: ~QAR 1M monthly average',
-                        'Quarterly collection rate trends',
-                        'Seasonal pattern analysis',
-                        'Quarterly exemptions changes',
-                        'Q1-Q4 comparative dashboard'
-                    ],
-                    'Annual Comparison (Y vs Y)': [
-                        '2026 vs 2025: +18% annual growth',
-                        'WPS 6-year CAGR: +18.7% annually',
-                        'Year-over-year satisfaction trends',
-                        'Annual revenue benchmarking',
-                        'Long-term performance indicators',
-                        'Multi-year strategic insights',
-                        'Annual compliance metrics'
-                    ],
-                    'Threshold Management': [
-                        'Set annual global threshold (Current: 98% for 2026)',
-                        'Review threshold exceptions',
-                        'Approve fee-specific threshold adjustments',
-                        'Monitor threshold compliance across all fees',
-                        'Historical threshold trends'
-                    ],
-                    'Approvals & Governance': [
-                        'Approve GM threshold acknowledgments',
-                        'Final authority on satisfaction status',
-                        'Review and approve exemption requests',
-                        'Approve major fee structure changes',
-                        'Sign off on compliance reports'
-                    ],
-                    'Reports & Analytics': [
-                        'Executive summary reports',
-                        'Bank-wide fee performance',
-                        'Revenue vs target analysis',
-                        'Exception and risk reports',
-                        'Compliance overview',
-                        'Export to PDF/Excel'
-                    ],
-                    'System Access': [
-                        'Full system visibility',
-                        'Access to all dashboards',
-                        'View all user activities',
-                        'System configuration',
-                        'User management oversight'
+                    '📊 System Intelligence': [
+                        'Real-time data refresh every 15 minutes',
+                        'Automated anomaly detection',
+                        'Predictive revenue forecasting',
+                        'Risk indicators and alerts',
+                        'Compliance status monitoring',
+                        'Executive KPI dashboard',
+                        'Mobile-friendly responsive design'
                     ]
                 },
-                actions: ['View Full Dashboard', 'Generate Executive Report', 'Approve Threshold Changes', 'Review Exemptions']
+                actions: ['View Performance Chart', 'Assess Satisfaction Status', 'Generate Executive Report', 'Access Business Group Details']
             },
             finance: {
                 title: '💰 GM Finance Dashboard',
