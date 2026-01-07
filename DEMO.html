@@ -385,28 +385,33 @@
 
         .preview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
         }
 
         .preview-item {
             background: white;
-            padding: 16px;
+            padding: 20px;
             border-radius: 12px;
             text-align: center;
             border: 1px solid var(--border-gray);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .preview-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
             color: var(--gold);
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
 
         .preview-label {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-gray);
+            line-height: 1.4;
         }
 
         .action-buttons {
